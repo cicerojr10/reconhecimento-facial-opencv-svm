@@ -53,5 +53,5 @@ O modelo foi treinado em um dataset customizado (Bella Ramsey e Pedro Pascal) e 
 ## 👤 Autor
 
 * **[Seu Nome Aqui]**
-* **LinkedIn:** [https://www.linkedin.com/in/seu-perfil/](https://www.linkedin.com/in/cicerojr-techprofessional/)
+* **LinkedIn:** [https://www.linkedin.com/in/cicerojr-techprofessional/](https://www.linkedin.com/in/cicerojr-techprofessional/)
 * **GitHub:** [https://github.com/cicerojr10](https://github.com/cicerojr10)
