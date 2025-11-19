@@ -1,24 +1,24 @@
-# 📸 Reconhecimento Facial Híbrido em Vídeos (YOLO + Face-Recognition)
+# 📸 Reconhecimento Facial em Vídeos com OpenCV e SVM
 
 ![Demonstração do Projeto](demo.gif)
 
 ## 📌 Sobre o Projeto
 
-Este é um projeto de Visão Computacional, desenvolvido como parte do curso de Ciência da Computação, que implementa um pipeline híbrido de alta performance para **detecção e reconhecimento de rostos em vídeos**.
+Este é um projeto de Visão Computacional desenvolvido para **detecção e reconhecimento de rostos em vídeos**. O objetivo foi criar um sistema robusto capaz de identificar atores específicos (Bella Ramsey e Pedro Pascal) em cenas de entrevistas, lidando com desafios como variação de ângulo e iluminação.
 
-O sistema utiliza o **YOLO (You Only Look Once)** para a detecção robusta de "pessoas" em qualquer ângulo e, em seguida, aplica a biblioteca **`face_recognition` (baseada em dlib)** para identificar rostos específicos dentro das caixas de detecção.
+O pipeline foi construído do zero utilizando um **Detector DNN (Rede Neural Profunda)** do OpenCV para encontrar os rostos e um classificador **SVM (Support Vector Machine)** treinado com embeddings faciais (OpenFace) para o reconhecimento.
 
-O modelo foi treinado em um dataset customizado (Bella Ramsey e Pedro Pascal) e processa um vídeo de teste, identificando os indivíduos conhecidos e rotulando os desconhecidos.
+O sistema alcançou uma precisão de **90%** no vídeo de teste, processando mais de 2000 frames com performance otimizada.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
 * **Python 3**
-* **OpenCV:** Para manipulação de vídeo e para rodar o detector YOLO.
-* **face_recognition (dlib):** Para a extração de embeddings (impressões digitais faciais) e o reconhecimento.
-* **NumPy:** Para operações numéricas eficientes.
-* **Google Colab:** Como ambiente de desenvolvimento e processamento.
+* **OpenCV (DNN):** Utilizando o modelo *ResNet-SSD* para detecção facial robusta.
+* **Scikit-learn:** Utilizando o classificador *SVM* para o reconhecimento dos embeddings.
+* **OpenFace:** Modelo utilizado para a extração das características faciais (embeddings).
+* **NumPy:** Para manipulação de arrays e operações matemáticas.
 
 ---
 
@@ -30,28 +30,33 @@ O modelo foi treinado em um dataset customizado (Bella Ramsey e Pedro Pascal) e 
     cd reconhecimento-facial-opencv-svm
     ```
 
-2.  **Crie um ambiente virtual e instale as dependências:**
+2.  **Instale as dependências:**
     ```bash
-    python -m venv venv
-    source venv/bin/activate  # (ou .\venv\Scripts\activate no Windows)
     pip install -r requirements.txt
     ```
-    *(Nota: a instalação do `face_recognition` e `dlib` pode demorar alguns minutos.)*
 
-3.  **Tenha os arquivos prontos:**
-    * O notebook (`02_Reconhecimento_Hibrido_YOLO_FaceRec.ipynb`) já está com o código.
-    * Os modelos pré-treinados (YOLO) estão na pasta `models_pretreinados/`.
-    * O dataset de treino está em `dataset_faces/`.
-    * Adicione um vídeo de teste (ex: `interview_test.mp4`) na pasta `videos_entrada/` (você pode precisar criar esta pasta).
+3.  **Estrutura de Arquivos Necessária:**
+    * Certifique-se de que a pasta `models_pretreinados/` contém os arquivos `.prototxt`, `.caffemodel` e `.t7` (incluídos neste repo).
+    * A pasta `dataset_faces/` deve conter as subpastas com as imagens de treino.
+    * Adicione um vídeo de teste na pasta `videos_entrada/`.
 
 4.  **Execute o Notebook:**
-    * Abra o notebook em um ambiente como o Google Colab (com GPU) ou Jupyter Notebook.
-    * Execute as células na ordem. O script irá carregar os modelos, treinar (aprender) com as imagens do `dataset_faces` e, em seguida, processar o seu vídeo de entrada, salvando o resultado em `videos_saida/`.
+    * Abra o arquivo `.ipynb` em um ambiente Jupyter ou Google Colab.
+    * Execute as células para carregar os modelos, treinar o SVM e processar o vídeo.
+
+---
+
+## 🧠 Desafios de Engenharia
+
+Durante o desenvolvimento, o maior desafio não foi apenas o algoritmo, mas a **Engenharia de Software** envolvida. O projeto exigiu:
+* **Gestão de Ambiente:** Resolução de conflitos complexos de dependências e drivers (CUDA/OpenCV).
+* **Curadoria de Dados:** A performance do modelo saltou significativamente após a criação de um dataset customizado com alta variabilidade (ângulos e expressões diversos).
+* **Otimização:** Implementação de lógica para garantir o processamento eficiente dos frames.
 
 ---
 
 ## 👤 Autor
 
-* **Cícero Junior**
-* **LinkedIn:** [https://www.linkedin.com/in/cicerojr-techprofessional/](https://www.linkedin.com/in/cicerojr-techprofessional/)
+* **[Seu Nome]**
+* **LinkedIn:** [https://www.linkedin.com/in/seu-perfil/](https://www.linkedin.com/in/cicerojr-techprofessional/)
 * **GitHub:** [https://github.com/cicerojr10](https://github.com/cicerojr10)
