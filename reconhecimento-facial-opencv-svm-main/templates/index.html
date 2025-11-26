@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.H.I.E.L.D. | BIOMETRIC GATEWAY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --shield-blue: #00a8ff;
+            --shield-dark: #051014;
+            --shield-alert: #ff3333;
+            --grid-color: rgba(0, 168, 255, 0.1);
+        }
+
+        body {
+            background-color: #000;
+            color: var(--shield-blue);
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Fundo de grade tática */
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: relative;
+        }
+
+        /* Vinheta escura nas bordas (efeito monitor antigo) */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 60%, #000 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .header {
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--shield-blue);
+            padding: 20px 0;
+            margin-bottom: 20px;
+            z-index: 2;
+            text-shadow: 0 0 10px var(--shield-blue);
+        }
+
+        .logo-text h1 { margin: 0; letter-spacing: 8px; font-size: 2.5em; }
+        .logo-text span { font-size: 0.7em; letter-spacing: 2px; opacity: 0.8; }
+
+        .top-stats { text-align: right; font-size: 0.8em; line-height: 1.5; }
+
+        .main-container {
+            display: flex;
+            gap: 30px;
+            z-index: 2;
+            align-items: flex-start;
+        }
+
+        /* Container do Vídeo */
+        .video-wrapper {
+            position: relative;
+            border: 1px solid var(--shield-blue);
+            padding: 5px;
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+            background: rgba(5, 16, 20, 0.8);
+        }
+
+        /* Cantos decorativos no vídeo */
+        .corner {
+            position: absolute;
+            width: 20px; height: 20px;
+            border: 3px solid var(--shield-blue);
+            transition: all 0.3s;
+        }
+        .tl { top: -3px; left: -3px; border-right: none; border-bottom: none; }
+        .tr { top: -3px; right: -3px; border-left: none; border-bottom: none; }
+        .bl { bottom: -3px; left: -3px; border-right: none; border-top: none; }
+        .br { bottom: -3px; right: -3px; border-left: none; border-top: none; }
+
+        img { display: block; width: 720px; height: auto; filter: contrast(1.1) brightness(1.1); }
+
+        /* Efeito de Scanline (Linha passando) */
+        .scan-line {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0, 168, 255, 0.2), transparent);
+            opacity: 0.5;
+            animation: scan 4s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Painel Lateral de Dados */
+        .data-panel {
+            width: 250px;
+            border-left: 2px solid var(--shield-blue);
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .data-box {
+            background: rgba(0, 168, 255, 0.05);
+            padding: 10px;
+            border: 1px solid rgba(0, 168, 255, 0.3);
+        }
+
+        .data-title { font-weight: bold; margin-bottom: 5px; border-bottom: 1px dashed var(--shield-blue); display: block; }
+        .data-value { font-size: 0.9em; color: #fff; }
+        
+        .blinking { animation: blink 1s infinite; color: var(--shield-alert); }
+
+        /* Rodapé */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7em;
+            border-top: 1px solid #333;
+            padding-top: 10px;
+            z-index: 2;
+            color: #666;
+        }
+
+        /* Animações */
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo-text">
+            <h1>S.H.I.E.L.D.</h1>
+            <span>STRATEGIC HOMELAND INTERVENTION & LOGISTICS</span>
+        </div>
+        <div class="top-stats">
+            <div>SERVER: US-NORTH-VIRGINIA</div>
+            <div>PROTOCOL: ODIN-7</div>
+            <div>STATUS: <span style="color: #0f0">ONLINE</span></div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="video-wrapper">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+            <div class="scan-line"></div>
+            
+            <img src="{{ url_for('video_feed') }}" alt="Live Feed">
+        </div>
+
+        <div class="data-panel">
+            <div class="data-box">
+                <span class="data-title">TARGET LOCK</span>
+                <div class="data-value">AUTO-TRACKING: ON</div>
+                <div class="data-value">FACE DETECT: ACTIVE</div>
+            </div>
+
+            <div class="data-box">
+                <span class="data-title">BIOMETRICS</span>
+                <div class="data-value">SCANNING...</div>
+                <div id="random-data" style="font-size: 0.8em; opacity: 0.7; font-family: monospace;">
+                    Delta: 0.42<br>Theta: 1.15<br>Match: PENDING
+                </div>
+            </div>
+
+            <div class="data-box">
+                <span class="data-title">ALERTS</span>
+                <div class="data-value blinking">LIVE FEED ACTIVE</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>SYSTEM ID: 8942-ALPHA</div>
+        <div>AUTHORIZED PERSONNEL ONLY // LEVEL 7 CLEARANCE</div>
+    </div>
+
+    <script>
+        setInterval(() => {
+            const d = document.getElementById('random-data');
+            d.innerHTML = `
+                Delta: ${(Math.random()).toFixed(4)}<br>
+                Theta: ${(Math.random() * 10).toFixed(2)}<br>
+                Vector: [${Math.floor(Math.random()*99)}, ${Math.floor(Math.random()*99)}]
+            `;
+        }, 200);
+    </script>
+
+</body>
+</html>
